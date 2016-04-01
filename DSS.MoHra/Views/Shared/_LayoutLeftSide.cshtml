@@ -1,0 +1,35 @@
+﻿<!-- =============================================== -->
+<!-- Left side column. contains the sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">Навигация по сайту</li>
+            <li>
+                <a href="@Url.Action("List", "Client", new { area = "" })">
+                    <i class="fa fa-file-text-o"></i> <span>Тестирование</span>
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("List", "User", new { area = "" })">
+                    <i class="fa fa-users"></i> <span>Пользователи</span>
+                </a>
+            </li>
+            @*@if (User.IsInRole("admin"))
+            {
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-key"></i>
+                        <span>Администрирование</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="@Url.Action("List", "UserRole", new { area = "" })"><i class="fa fa-circle-o"></i> Роли пользователей</a></li>
+                    </ul>
+                </li>
+            }*@
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

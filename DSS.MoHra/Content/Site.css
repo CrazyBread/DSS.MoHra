@@ -1,0 +1,38 @@
+﻿/* Styles will be here */
+
+/* adminlte fixes */
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+    height: auto;
+}
+
+.validation-summary-errors ul {
+    margin-bottom: 0;
+}
+
+/* Styling for Select2 with error */
+div.has-error .select2-selection {
+    border-color: rgb(185, 74, 72) !important;
+}
+
+/* table fixes and additions */
+td.actions, th.actions {
+    white-space: nowrap;
+    width: 1px;
+}
+
+/* dropdown fixes */
+.dropdown-wrapper {
+    display: none;
+}
+
+.dropdown.open > .dropdown-wrapper {
+    position:absolute;
+    left: 0;
+    display: block;
+    z-index: 999;
+}
+
+.dropdown.open > .dropdown-wrapper .dropdown-menu {
+    display: block;
+    position: initial;
+}

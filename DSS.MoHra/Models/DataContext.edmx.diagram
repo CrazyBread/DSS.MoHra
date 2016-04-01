@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b9e4c9d8be4648909e970fb7d8ab80d2" Name="Diagram1">
+        <EntityTypeShape EntityType="DataContextModel.Question" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataContextModel.QuestionVariant" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataContextModel.ResolverCondition" Width="1.5" PointX="2.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataContextModel.Result" Width="1.5" PointX="8" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataContextModel.ResultGroup" Width="1.5" PointX="5.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataContextModel.User" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataContextModel.UserSession" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="DataContextModel.FK_Question_Question" ManuallyRouted="false" />
+        <AssociationConnector Association="DataContextModel.FK_QuestionVariant_Question" ManuallyRouted="false" />
+        <AssociationConnector Association="DataContextModel.FK_Result_ResultGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="DataContextModel.FK_UserSession_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DataContextModel.Answer" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DataContextModel.UserInformation" Width="1.5" PointX="3" PointY="10.375" />
+        <EntityTypeShape EntityType="DataContextModel.UserRole" Width="1.5" PointX="0.75" PointY="11.375" />
+        <AssociationConnector Association="DataContextModel.FK_User_UserRole" />
+        <AssociationConnector Association="DataContextModel.FK_UserInformation_User" />
+        <AssociationConnector Association="DataContextModel.FK_UserRole_UserRole" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

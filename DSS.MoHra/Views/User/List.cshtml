@@ -1,0 +1,76 @@
+﻿@model DSS.MoHra.Models.UserViewModel
+@{
+    ViewBag.Title = "Список пользователей";
+    var isAdmin = User.IsInRole("admin");
+}
+
+@helper Actions(bool isAdmin)
+{
+    <div class="box">
+        <div class="box-body">
+            @if (isAdmin)
+            {
+                <a href="@Url.Action("Edit", "User", new { area = "" })" class="btn btn-primary">Добавить</a>
+            }
+            <a href="@Url.Action("Edit", "User", new { area = "", id = Identity.User.Id })" class="btn btn-default">Изменить себя</a>
+        </div>
+    </div>
+}
+
+@Actions(isAdmin)
+
+@if (Model.Users != null && Model.Users.Any())
+{
+    var prototype = Model.Users.FirstOrDefault();
+    <div class="box">
+        <div class="box-body">
+            <table class="table table-striped">
+                <tr>
+                    <th>@(Html.DisplayNameFor(i => prototype.Login))</th>
+                    <th>@(Html.DisplayNameFor(i => prototype.RoleId))</th>
+                    <th>@(Html.DisplayNameFor(i => prototype.DateLastLogin))</th>
+                    <th>@(Html.DisplayNameFor(i => prototype.Information.Name))</th>
+                    <th>@(Html.DisplayNameFor(i => prototype.Information.Phone))</th>
+                    <th>@(Html.DisplayNameFor(i => prototype.Information.Email))</th>
+                    @if (isAdmin)
+                    {
+                        <th>&nbsp;</th>
+                    }
+                </tr>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(i => user.Login)</td>
+                        <td>@Html.DisplayFor(i => user.Role.Name)</td>
+                        <td>@Html.DisplayFor(i => user.DateLastLogin)</td>
+                        <td>@(user.Information != null ? Html.DisplayFor(i => user.Information.Name) : new MvcHtmlString("-"))</td>
+                        <td>@(user.Information != null ? Html.DisplayFor(i => user.Information.Phone) : new MvcHtmlString("-"))</td>
+                        <td>@(user.Information != null ? Html.DisplayFor(i => user.Information.Email) : new MvcHtmlString("-"))</td>
+                        @if (isAdmin)
+                        {
+                            <td class="actions">
+                                @using (Html.BootstrapDropdown(user.Id.ToString()))
+                                {
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="@Url.Action("Edit", new { id = user.Id })"><i class="fa fa-fw fa-pencil"></i> Изменить</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#deleteModal" data-id="@user.Id" data-link="@Url.Action("Delete", "User")"><i class="fa fa-fw fa-trash-o"></i> Удалить</a></li>
+                                    </ul>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    @Actions(isAdmin)
+}
+else
+{
+    <div class="alert alert-danger">
+        Извините, пользователей не обнаружено. Странно, как это вообще могло возникнуть.
+    </div>
+}
+
+@View.ShowDeleteModal()

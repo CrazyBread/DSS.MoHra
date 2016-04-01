@@ -1,0 +1,671 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище DataContextModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="UserSessionId" />
+            <PropertyRef Name="QuestionVariantId" />
+          </Key>
+          <Property Name="UserSessionId" Type="int" Nullable="false" />
+          <Property Name="QuestionVariantId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentVariantId" Type="int" />
+          <Property Name="Text" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsMultiVariant" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestionVariant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="Sort" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FactCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ResolverCondition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Premise" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Conclusion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Desctipion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsFinish" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ResultGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="DateLastLogin" Type="datetime2" Precision="2" />
+          <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
+          <Property Name="Updated" Type="datetime2" Precision="2" />
+        </EntityType>
+        <EntityType Name="UserInformation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="100" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DepartmentPosition" Type="nvarchar" MaxLength="100" />
+          <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
+          <Property Name="Updated" Type="datetime2" Precision="2" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
+          <Property Name="Updated" Type="datetime2" Precision="2" />
+        </EntityType>
+        <EntityType Name="UserSession">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IsCompleted" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Answer_QuestionVariant">
+          <End Role="QuestionVariant" Type="Self.QuestionVariant" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionVariant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QuestionVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answer_UserSession">
+          <End Role="UserSession" Type="Self.UserSession" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserSession">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="UserSessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_Question">
+          <End Role="QuestionVariant" Type="Self.QuestionVariant" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionVariant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="ParentVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionVariant_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="QuestionVariant" Type="Self.QuestionVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuestionVariant">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_ResultGroup">
+          <End Role="ResultGroup" Type="Self.ResultGroup" Multiplicity="1" />
+          <End Role="Result" Type="Self.Result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResultGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Result">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserRole">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserInformation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserInformation" Type="Self.UserInformation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserInformation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_UserRole">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="0..1" />
+          <End Role="UserRole1" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSession_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserSession" Type="Self.UserSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserSession">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DataContextModelContainer">
+          <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dss" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dss" store:Type="Tables" />
+          <EntitySet Name="QuestionVariant" EntityType="Self.QuestionVariant" Schema="dss" store:Type="Tables" />
+          <EntitySet Name="ResolverCondition" EntityType="Self.ResolverCondition" Schema="dss" store:Type="Tables" />
+          <EntitySet Name="Result" EntityType="Self.Result" Schema="dss" store:Type="Tables" />
+          <EntitySet Name="ResultGroup" EntityType="Self.ResultGroup" Schema="dss" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dss" store:Type="Tables" />
+          <EntitySet Name="UserInformation" EntityType="Self.UserInformation" Schema="dss" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dss" store:Type="Tables" />
+          <EntitySet Name="UserSession" EntityType="Self.UserSession" Schema="dss" store:Type="Tables" />
+          <AssociationSet Name="FK_Answer_QuestionVariant" Association="Self.FK_Answer_QuestionVariant">
+            <End Role="QuestionVariant" EntitySet="QuestionVariant" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answer_UserSession" Association="Self.FK_Answer_UserSession">
+            <End Role="UserSession" EntitySet="UserSession" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_Question" Association="Self.FK_Question_Question">
+            <End Role="QuestionVariant" EntitySet="QuestionVariant" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionVariant_Question" Association="Self.FK_QuestionVariant_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="QuestionVariant" EntitySet="QuestionVariant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_ResultGroup" Association="Self.FK_Result_ResultGroup">
+            <End Role="ResultGroup" EntitySet="ResultGroup" />
+            <End Role="Result" EntitySet="Result" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserRole" Association="Self.FK_User_UserRole">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserInformation_User" Association="Self.FK_UserInformation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserInformation" EntitySet="UserInformation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_UserRole" Association="Self.FK_UserRole_UserRole">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="UserRole1" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSession_User" Association="Self.FK_UserSession_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserSession" EntitySet="UserSession" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DataContextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentVariantId" Type="Int32" />
+          <Property Name="Text" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsMultiVariant" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+          <NavigationProperty Name="QuestionVariant" Relationship="Self.FK_Question_Question" FromRole="Question" ToRole="QuestionVariant" />
+          <NavigationProperty Name="QuestionVariants" Relationship="Self.FK_QuestionVariant_Question" FromRole="Question" ToRole="QuestionVariant" />
+        </EntityType>
+        <EntityType Name="QuestionVariant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Sort" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FactCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Question_Question" FromRole="QuestionVariant" ToRole="Question" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_QuestionVariant_Question" FromRole="QuestionVariant" ToRole="Question" />
+          <NavigationProperty Name="UserSessions" Relationship="Self.Answer" FromRole="QuestionVariant" ToRole="UserSession" />
+        </EntityType>
+        <EntityType Name="ResolverCondition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Premise" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Conclusion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Desctipion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+        </EntityType>
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsFinish" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+          <NavigationProperty Name="ResultGroup" Relationship="Self.FK_Result_ResultGroup" FromRole="Result" ToRole="ResultGroup" />
+        </EntityType>
+        <EntityType Name="ResultGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+          <NavigationProperty Name="Results" Relationship="Self.FK_Result_ResultGroup" FromRole="ResultGroup" ToRole="Result" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateLastLogin" Type="DateTime" Precision="2" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+          <NavigationProperty Name="Sessions" Relationship="Self.FK_UserSession_User" FromRole="User" ToRole="UserSession" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Precision="2" />
+          <NavigationProperty Name="Role" Relationship="DataContextModel.FK_User_UserRole" FromRole="User" ToRole="UserRole" />
+          <NavigationProperty Name="Information" Relationship="DataContextModel.FK_UserInformation_User" FromRole="User" ToRole="UserInformation" />
+        </EntityType>
+        <EntityType Name="UserSession">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserSession_User" FromRole="UserSession" ToRole="User" />
+          <NavigationProperty Name="QuestionVariants" Relationship="Self.Answer" FromRole="UserSession" ToRole="QuestionVariant" />
+        </EntityType>
+        <Association Name="FK_Question_Question">
+          <End Role="QuestionVariant" Type="Self.QuestionVariant" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionVariant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="ParentVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionVariant_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="QuestionVariant" Type="Self.QuestionVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuestionVariant">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_ResultGroup">
+          <End Role="ResultGroup" Type="Self.ResultGroup" Multiplicity="1" />
+          <End Role="Result" Type="Self.Result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResultGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Result">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSession_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserSession" Type="Self.UserSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserSession">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Answer">
+          <End Role="QuestionVariant" Type="Self.QuestionVariant" Multiplicity="*" />
+          <End Role="UserSession" Type="Self.UserSession" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DataContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="QuestionVariants" EntityType="Self.QuestionVariant" />
+          <EntitySet Name="ResolverConditions" EntityType="Self.ResolverCondition" />
+          <EntitySet Name="Results" EntityType="Self.Result" />
+          <EntitySet Name="ResultGroups" EntityType="Self.ResultGroup" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserSessions" EntityType="Self.UserSession" />
+          <AssociationSet Name="FK_Question_Question" Association="Self.FK_Question_Question">
+            <End Role="QuestionVariant" EntitySet="QuestionVariants" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionVariant_Question" Association="Self.FK_QuestionVariant_Question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="QuestionVariant" EntitySet="QuestionVariants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_ResultGroup" Association="Self.FK_Result_ResultGroup">
+            <End Role="ResultGroup" EntitySet="ResultGroups" />
+            <End Role="Result" EntitySet="Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSession_User" Association="Self.FK_UserSession_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserSession" EntitySet="UserSessions" />
+          </AssociationSet>
+          <AssociationSet Name="Answer" Association="Self.Answer">
+            <End Role="QuestionVariant" EntitySet="QuestionVariants" />
+            <End Role="UserSession" EntitySet="UserSessions" />
+          </AssociationSet>
+          <EntitySet Name="UserInformations" EntityType="DataContextModel.UserInformation" />
+          <EntitySet Name="UserRoles" EntityType="DataContextModel.UserRole" />
+          <AssociationSet Name="FK_User_UserRole" Association="DataContextModel.FK_User_UserRole">
+            <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserInformation_User" Association="DataContextModel.FK_UserInformation_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserInformation" EntitySet="UserInformations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_UserRole" Association="DataContextModel.FK_UserRole_UserRole">
+            <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="UserRole1" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="UserInformation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentPosition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+          <Property Name="Updated" Type="DateTime" Precision="2" />
+          <NavigationProperty Name="User" Relationship="DataContextModel.FK_UserInformation_User" FromRole="UserInformation" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+          <Property Name="Updated" Type="DateTime" Precision="2" />
+          <NavigationProperty Name="Users" Relationship="DataContextModel.FK_User_UserRole" FromRole="UserRole" ToRole="User" />
+          <NavigationProperty Name="Parent" Relationship="DataContextModel.FK_UserRole_UserRole" FromRole="UserRole1" ToRole="UserRole" />
+        </EntityType>
+        <Association Name="FK_User_UserRole">
+          <End Type="DataContextModel.UserRole" Role="UserRole" Multiplicity="1" />
+          <End Type="DataContextModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserInformation_User">
+          <End Type="DataContextModel.User" Role="User" Multiplicity="1" />
+          <End Type="DataContextModel.UserInformation" Role="UserInformation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserInformation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_UserRole">
+          <End Type="DataContextModel.UserRole" Role="UserRole" Multiplicity="0..1" />
+          <End Type="DataContextModel.UserRole" Role="UserRole1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DataContextModelContainer" CdmEntityContainer="DataContext">
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="DataContextModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentVariantId" ColumnName="ParentVariantId" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="IsMultiVariant" ColumnName="IsMultiVariant" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionVariants">
+            <EntityTypeMapping TypeName="DataContextModel.QuestionVariant">
+              <MappingFragment StoreEntitySet="QuestionVariant">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="FactCode" ColumnName="FactCode" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResolverConditions">
+            <EntityTypeMapping TypeName="DataContextModel.ResolverCondition">
+              <MappingFragment StoreEntitySet="ResolverCondition">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Premise" ColumnName="Premise" />
+                <ScalarProperty Name="Conclusion" ColumnName="Conclusion" />
+                <ScalarProperty Name="Desctipion" ColumnName="Desctipion" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Results">
+            <EntityTypeMapping TypeName="DataContextModel.Result">
+              <MappingFragment StoreEntitySet="Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsFinish" ColumnName="IsFinish" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResultGroups">
+            <EntityTypeMapping TypeName="DataContextModel.ResultGroup">
+              <MappingFragment StoreEntitySet="ResultGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DataContextModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateLastLogin" ColumnName="DateLastLogin" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSessions">
+            <EntityTypeMapping TypeName="DataContextModel.UserSession">
+              <MappingFragment StoreEntitySet="UserSession">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Answer" TypeName="DataContextModel.Answer" StoreEntitySet="Answer">
+            <EndProperty Name="QuestionVariant">
+              <ScalarProperty Name="Id" ColumnName="QuestionVariantId" />
+            </EndProperty>
+            <EndProperty Name="UserSession">
+              <ScalarProperty Name="Id" ColumnName="UserSessionId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="UserInformations">
+            <EntityTypeMapping TypeName="DataContextModel.UserInformation">
+              <MappingFragment StoreEntitySet="UserInformation">
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="DepartmentPosition" ColumnName="DepartmentPosition" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="DataContextModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

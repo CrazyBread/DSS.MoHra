@@ -1,0 +1,65 @@
+﻿<header class="main-header">
+    <!-- Logo -->
+    <a href="@Url.Action("Index", "Home", new { area = "" })" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- User Account: style can be found in dropdown.less -->
+                <li>
+                    <a href="@Url.Action("About", "Home", new { area = "" })" title="Об этом веб-сайте">
+                        <i class="fa fa-info"></i>
+                    </a>
+                </li>
+                <li class="dropdown user user-menu">
+                    @if (Identity.IsAuthenticated)
+                    {
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i>&nbsp;
+                            <span class="hidden-xs">@(Identity.User.Information.Name ?? Identity.User.Login)</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                @*<img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">*@
+                                <p>
+                                    @(Identity.User.Information.DepartmentPosition ?? "должность?")
+                                    <small>@(Identity.User.Information.CompanyName ?? "компания?") - @(Identity.User.Information.DepartmentName ?? "отдел?")</small>
+                                </p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Профиль</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="@Url.Action("Logout", "Account", new { area = "" })" class="btn btn-default btn-flat">Выйти</a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Login", "Account", new { area = "" })">
+                            <i class="fa fa-user"></i>&nbsp;
+                            <span class="hidden-xs">Войти</span>
+                        </a>
+                    }
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

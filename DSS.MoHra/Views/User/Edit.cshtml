@@ -1,0 +1,107 @@
+﻿@model DSS.MoHra.Models.UserEditViewModel
+@{
+    ViewBag.Title = Model.IsEdit ? "Изменение информации о пользователе " + Model.Main.Login : "Добавление нового пользователя";
+}
+
+@using (Ajax.BeginForm(new AjaxOptions() { OnComplete = "MetaAjaxFormOnCompleteHandler" }))
+{
+    <div class="box">
+        <div class="box-body">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Main.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Main.Login, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Main.Login, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Main.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(model => model.Main.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Main.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Main.PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(model => model.Main.PasswordConfirm, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Main.PasswordConfirm, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Main.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(i => i.Main.RoleId, Model.RoleOptions, "[ Выберите роль ]", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Main.RoleId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            @* /.form-horizontal *@
+        </div>
+    </div>
+    @* /.box *@
+
+    <div class="box box-default">
+        <div class="box-header">
+            <h3 class="box-title">Дополнительная информация</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Additional.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Additional.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Additional.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Additional.DepartmentPosition, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Additional.DepartmentPosition, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Additional.DepartmentPosition, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Additional.CompanyName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Additional.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Additional.CompanyName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Additional.DepartmentName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Additional.DepartmentName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Additional.DepartmentName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Additional.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Additional.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Additional.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Additional.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Additional.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Additional.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* /.box *@
+
+    <div class="box box-solid">
+        <div class="box-body">
+            <input type="submit" value="@(Model.IsEdit ? "Изменить" : "Добавить")" class="btn btn-primary" />
+            @Html.BackLink(Url.Action("List"), Request)
+        </div>
+    </div>
+    @* /.box *@
+}

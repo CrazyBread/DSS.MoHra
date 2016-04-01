@@ -1,0 +1,60 @@
+﻿@model DSS.MoHra.Models.HomeViewModel
+@{
+    ViewBag.Title = "Заглавная страница";
+}
+
+@*@if (Model.Clients.Any())
+{
+    <div class="box">
+        <div class="box-body">
+            <table class="table table-striped">
+                <tr>
+                    <th>Клиент</th>
+                    @foreach (var elementType in Model.ElementTypes)
+                    {
+                        <th title="@elementType.NameShort">@elementType.NameFull</th>
+                    }
+                </tr>
+                @foreach (var client in Model.Clients)
+                {
+                    <tr>
+                        <td>@client.Name</td>
+                        @foreach (var elementType in Model.ElementTypes)
+                        {
+                            var elements = Model.Elements.Where(i => i.Instance.ClientId == client.Id && i.TypeId == elementType.Id);
+                            <td>
+                                @if (elements.Any())
+                                {
+                                    bool needToSplit = false;
+                                    foreach(var element in elements)
+                                    {
+                                        if(element.Website != null)
+                                        {
+                                            @(needToSplit ? " | " : "")
+                                            <a href="@element.Website.Url" target="_blank">@element.Instance.Name</a>
+                                            needToSplit = true;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <i class="fa fa-minus" title="Не представлен"></i>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">
+        Извините, отсутствуют сведения о клиентах.
+        @if (User.IsInRole("admin"))
+        {
+            <a href="@Url.Action("Edit", "Client")" class="btn btn-danger">Добавить</a>
+        }
+    </div>
+}*@

@@ -1,0 +1,48 @@
+﻿@model DSS.MoHra.Models.AccountLoginModel
+@{
+    ViewBag.Title = "Авторизация";
+    ViewBag.BodyClass = "hold-transition login-page";
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+}
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href="@Url.Action("Index", "Home")"></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Чтобы продолжить работать с системой, пожалуйста, авторизуйтесь</p>
+
+        @Html.ValidationSummary(true)
+
+        @using (Html.BeginForm())
+        {
+            <div class="form-group has-feedback">
+                @Html.TextBoxFor(i => i.Login, new { @class = "form-control", placeholder = "Имя пользователя" })
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                @Html.ValidationMessageFor(i => i.Login)
+            </div>
+            <div class="form-group has-feedback">
+                @Html.PasswordFor(i => i.Password, new { @class = "form-control", placeholder = "Пароль" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                @Html.ValidationMessageFor(i => i.Password)
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div @*class="checkbox icheck"*@>
+                        <label>
+                            @Html.CheckBoxFor(i => i.IsPersistent) Запомнить меня
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        }
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->

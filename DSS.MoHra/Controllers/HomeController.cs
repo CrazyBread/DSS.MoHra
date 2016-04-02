@@ -13,6 +13,41 @@ namespace DSS.MoHra.Controllers
         public ActionResult Index()
         {
             var model = new HomeViewModel();
+            var userSession = db.UserSessions.FirstOrDefault(d => d.UserId == Helpers.Identity.User.Id && !d.IsCompleted);
+            if (userSession == null)
+            {
+                userSession = new UserSession() { UserId = Helpers.Identity.User.Id, IsCompleted = false };
+                db.UserSessions.Add(userSession);
+                db.SaveChanges();
+            }
+            var nextQuestionId = db.GetNextQuestion(userSession.Id);
+            if (nextQuestionId > 0)
+            {
+                var question = db.Questions.Include("QuestionVariants").FirstOrDefault(d => d.Id == nextQuestionId);
+                model.NextQuestion = question;
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Index(List<int> questionVariantId)
+        {
+            var model = new HomeViewModel();
+            var userSession = db.UserSessions.FirstOrDefault(d => d.UserId == Helpers.Identity.User.Id && !d.IsCompleted);
+            if (userSession != null)
+            {
+                foreach (var answ in questionVariantId)
+                {
+                    var answ = new Answer
+                }
+                var nextQuestionId = db.GetNextQuestion(userSession.Id);
+                if (nextQuestionId > 0)
+                {
+                    var question = db.Questions.Include("QuestionVariants").FirstOrDefault(d => d.Id == nextQuestionId);
+                    model.NextQuestion = question;
+                }
+            }
 
             return View(model);
         }

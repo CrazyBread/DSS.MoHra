@@ -3,58 +3,59 @@
     ViewBag.Title = "Заглавная страница";
 }
 
-@*@if (Model.Clients.Any())
+@if (Model.NextQuestion != null)
 {
-    <div class="box">
-        <div class="box-body">
-            <table class="table table-striped">
-                <tr>
-                    <th>Клиент</th>
-                    @foreach (var elementType in Model.ElementTypes)
+    using (Html.BeginForm())
+    { 
+        <div class="box">
+            <div class="box-header">
+                <h2 class="box-title">@Model.NextQuestion.Text</h2>
+            </div>
+            <div class="box-body">
+                <div class="list-group">
+                    @foreach (var variant in Model.NextQuestion.QuestionVariants.OrderBy(d => d.Sort))
                     {
-                        <th title="@elementType.NameShort">@elementType.NameFull</th>
-                    }
-                </tr>
-                @foreach (var client in Model.Clients)
-                {
-                    <tr>
-                        <td>@client.Name</td>
-                        @foreach (var elementType in Model.ElementTypes)
+                        if (Model.NextQuestion.IsMultiVariant)
                         {
-                            var elements = Model.Elements.Where(i => i.Instance.ClientId == client.Id && i.TypeId == elementType.Id);
-                            <td>
-                                @if (elements.Any())
-                                {
-                                    bool needToSplit = false;
-                                    foreach(var element in elements)
-                                    {
-                                        if(element.Website != null)
-                                        {
-                                            @(needToSplit ? " | " : "")
-                                            <a href="@element.Website.Url" target="_blank">@element.Instance.Name</a>
-                                            needToSplit = true;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    <i class="fa fa-minus" title="Не представлен"></i>
-                                }
-                            </td>
+                            <label class="list-group-item">
+                                @Html.CheckBox("questionVariantId", false, new { id = "qusetionVariant" + variant.Id, data_iid = variant.Id })
+                                @variant.Text
+                            </label>
                         }
-                    </tr>
-                }
-            </table>
+                        else
+                        {
+                            <label class="list-group-item">
+                                @Html.RadioButton("qusetionVariantGroup", false, new { id = "qusetionVariant-" + variant.Id, data_iid = variant.Id })
+                                @variant.Text
+                            </label>
+                        }
+                    }
+                    @if(!Model.NextQuestion.IsMultiVariant)
+                    {
+                        @Html.Hidden("qusetionVariantId")
+                    }
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Ответить</button>
+            </div>
         </div>
-    </div>
+    }
 }
 else
 {
     <div class="alert alert-danger">
-        Извините, отсутствуют сведения о клиентах.
-        @if (User.IsInRole("admin"))
-        {
-            <a href="@Url.Action("Edit", "Client")" class="btn btn-danger">Добавить</a>
-        }
+        Извините, нет данных.
     </div>
-}*@
+}
+
+@if (!Model.NextQuestion.IsMultiVariant)
+{
+    <script type="text/javascript">
+        $(function () {
+            $('input[type="radio"]').on('change', function () {
+                $('#qusetionVariantId').val($(this).attr('data-iid'));
+            });
+        });
+    </script>
+}

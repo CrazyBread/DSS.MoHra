@@ -7,6 +7,6 @@ namespace DSS.MoHra.Models
 {
     public class HomeViewModel
     {
-
+        public Question NextQuestion; 
     }
 }

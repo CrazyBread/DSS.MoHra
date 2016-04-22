@@ -23,7 +23,7 @@ namespace DSS.MoHra.Resolver.Tests
         }
 
         [TestMethod]
-        public void DRT_Resolve()
+        public void DRT_Resolve_FactsOnly()
         {
             var resolver = new DirectResolver();
 
@@ -45,6 +45,33 @@ namespace DSS.MoHra.Resolver.Tests
 
             Assert.AreNotEqual(null, result);
             Assert.AreNotEqual(0, result.Log.Count);
+            Assert.AreEqual(3, result.Facts.Count);
+        }
+
+        [TestMethod]
+        public void DRT_Resolve_WithAnswer()
+        {
+            var resolver = new DirectResolver();
+
+            var factA = new ResolverFact("A");
+            var factB = new ResolverFact("B", false);
+            var factC = new ResolverFact("C");
+
+            var rule1 = new ResolverRule("A*!B", factC);
+            var rule2 = new ResolverRule("!B", factA);
+
+            resolver.AddFact(factA);
+            resolver.AddFact(factB);
+            resolver.AddFact(factC);
+            resolver.AddRule(rule1);
+            resolver.AddRule(rule2);
+            resolver.AddKnownFact(factB);
+
+            var result = resolver.Resolve();
+
+            Assert.AreNotEqual(null, result);
+            Assert.AreNotEqual(0, result.Log.Count);
+            Assert.AreEqual(2, result.Facts.Count); // becaule without B
         }
     }
 }

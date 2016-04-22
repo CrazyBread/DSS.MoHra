@@ -17,18 +17,21 @@ namespace DSS.MoHra.Resolver
             bool shouldRepeat = false;
             do
             {
+                shouldRepeat = false;
                 result.Add("Начался цикл прохождения правил.");
-                foreach (var rule in _rules.Except(_usedRules))
+                foreach (var rule in Rules.Except(UsedRules))
                 {
                     if (_RuleIsWorked(rule))
                     {
-                        _usedRules.Add(rule);
+                        MarkRuleAsUsed(rule);
                         shouldRepeat = true;
                         AddKnownFact(rule.Conclusion);
                         result.Add("Добавлен новый факт " + rule.Conclusion.Code + ".");
                     }
                 }
             } while (shouldRepeat);
+
+            result.Facts.AddRange(KnownFacts.Where(i => !i.QuestionValue.HasValue));
 
             return result;
         }

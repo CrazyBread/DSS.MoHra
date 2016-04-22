@@ -11,11 +11,13 @@ namespace DSS.MoHra.Resolver
     {
         private bool _resolveFinished = false;
 
-        protected List<ResolverFact> _facts;
-        protected List<ResolverFact> _knownFacts;
-        protected List<ResolverRule> _rules;
-        protected List<ResolverRule> _usedRules;
+        private List<ResolverFact> _facts;
+        private List<ResolverFact> _knownFacts;
+        private List<ResolverRule> _rules;
+        private List<ResolverRule> _usedRules;
 
+        protected ReadOnlyCollection<ResolverFact> KnownFacts { get { return _knownFacts.AsReadOnly(); } }
+        protected ReadOnlyCollection<ResolverRule> UsedRules { get { return _usedRules.AsReadOnly(); } }
         public ReadOnlyCollection<ResolverFact> Facts { get { return _facts.AsReadOnly(); } }
         public ReadOnlyCollection<ResolverRule> Rules { get { return _rules.AsReadOnly(); } }
 
@@ -56,12 +58,15 @@ namespace DSS.MoHra.Resolver
 
         protected void MarkRuleAsUsed(ResolverRule rule)
         {
-            if (!_rules.Contains(rule))
+            if (!_usedRules.Contains(rule))
                 _usedRules.Add(rule);
         }
         
         protected bool _RuleIsWorked(ResolverRule rule)
         {
+            if (_usedRules.Contains(rule))
+                return false;
+
             var factNames = rule.Premise.Split(new char[] { '+', '*', '(', ')', '!' }, StringSplitOptions.RemoveEmptyEntries);
             var factItems = _facts.Where(i => factNames.Contains(i.Code));
 

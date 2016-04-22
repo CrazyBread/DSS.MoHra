@@ -11,11 +11,13 @@ namespace DSS.MoHra.Resolver
     {
         private List<string> _log;
 
+        public List<ResolverFact> Facts { set; get; }
         public ReadOnlyCollection<string> Log { get { return _log.AsReadOnly(); } }
 
         public ResolverResult()
         {
             _log = new List<string>();
+            Facts = new List<ResolverFact>();
         }
 
         public void Add(string text)

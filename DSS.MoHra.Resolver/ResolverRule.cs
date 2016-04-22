@@ -13,6 +13,9 @@ namespace DSS.MoHra.Resolver
 
         public ResolverRule(string premise, ResolverFact conclusion)
         {
+            if (conclusion.QuestionValue.HasValue)
+                throw new ArgumentException("Заключением правила должен быть факт.");
+
             Premise = premise;
             Conclusion = conclusion;
         }

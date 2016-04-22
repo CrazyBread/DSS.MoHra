@@ -44,6 +44,7 @@ namespace DSS.MoHra.Resolver.Tests
             var result = resolver.Resolve();
 
             Assert.AreNotEqual(null, result);
+            Assert.AreNotEqual(0, result.Log.Count);
         }
     }
 }

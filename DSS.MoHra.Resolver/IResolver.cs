@@ -10,6 +10,7 @@ namespace DSS.MoHra.Resolver
     {
         void AddRule(ResolverRule rule);
         void AddFact(ResolverFact fact);
+        void AddKnownFact(ResolverFact fact);
         ResolverResult Resolve();
     }
 }

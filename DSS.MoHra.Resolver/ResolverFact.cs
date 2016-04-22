@@ -9,10 +9,12 @@ namespace DSS.MoHra.Resolver
     public class ResolverFact
     {
         public string Code { protected set; get; }
+        public bool? QuestionValue { protected set; get; }
 
-        public ResolverFact(string code)
+        public ResolverFact(string code, bool? questionValue = null)
         {
             Code = code;
+            QuestionValue = questionValue;
         }
     }
 }

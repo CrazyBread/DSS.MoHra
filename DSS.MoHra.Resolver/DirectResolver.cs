@@ -8,5 +8,11 @@ namespace DSS.MoHra.Resolver
 {
     public class DirectResolver : Resolver
     {
+        public override ResolverResult Resolve()
+        {
+            base.Resolve();
+
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,21 +18,21 @@
                         if (Model.NextQuestion.IsMultiVariant)
                         {
                             <label class="list-group-item">
-                                @Html.CheckBox("questionVariantId", false, new { id = "qusetionVariant" + variant.Id, data_iid = variant.Id })
+                                @Html.CheckBox("questionVariantId", false, new { id = "questionVariantId-" + variant.Id, data_iid = variant.Id })
                                 @variant.Text
                             </label>
                         }
                         else
                         {
                             <label class="list-group-item">
-                                @Html.RadioButton("qusetionVariantGroup", false, new { id = "qusetionVariant-" + variant.Id, data_iid = variant.Id })
+                                @Html.RadioButton("questionVariantGroup", false, new { id = "questionVariantId-" + variant.Id, data_iid = variant.Id })
                                 @variant.Text
                             </label>
                         }
                     }
                     @if(!Model.NextQuestion.IsMultiVariant)
                     {
-                        @Html.Hidden("qusetionVariantId")
+                        @Html.Hidden("questionVariantId")
                     }
                 </div>
             </div>
@@ -49,12 +49,12 @@ else
     </div>
 }
 
-@if (!Model.NextQuestion.IsMultiVariant)
+@if (Model.NextQuestion != null && !Model.NextQuestion.IsMultiVariant)
 {
     <script type="text/javascript">
         $(function () {
             $('input[type="radio"]').on('change', function () {
-                $('#qusetionVariantId').val($(this).attr('data-iid'));
+                $('#questionVariantId').val($(this).attr('data-iid'));
             });
         });
     </script>

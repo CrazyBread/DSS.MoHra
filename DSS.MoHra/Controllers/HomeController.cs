@@ -39,7 +39,9 @@ namespace DSS.MoHra.Controllers
             {
                 foreach (var answ in questionVariantId)
                 {
-                    var answ = new Answer
+                    var variantItem = db.QuestionVariants.FirstOrDefault(d => d.Id == answ);
+                    if (variantItem != null)
+                        userSession.QuestionVariants.Add(variantItem);
                 }
                 var nextQuestionId = db.GetNextQuestion(userSession.Id);
                 if (nextQuestionId > 0)
@@ -47,6 +49,9 @@ namespace DSS.MoHra.Controllers
                     var question = db.Questions.Include("QuestionVariants").FirstOrDefault(d => d.Id == nextQuestionId);
                     model.NextQuestion = question;
                 }
+                else
+                    userSession.IsCompleted = true;
+                db.SaveChanges();
             }
 
             return View(model);

@@ -26,6 +26,11 @@ namespace DSS.MoHra.Controllers
                 var question = db.Questions.Include("QuestionVariants").FirstOrDefault(d => d.Id == nextQuestionId);
                 model.NextQuestion = question;
             }
+            else
+            {
+                userSession.IsCompleted = true;
+                db.SaveChanges();
+            }
 
             return View(model);
         }
@@ -43,15 +48,13 @@ namespace DSS.MoHra.Controllers
                     if (variantItem != null)
                         userSession.QuestionVariants.Add(variantItem);
                 }
+                db.SaveChanges();
                 var nextQuestionId = db.GetNextQuestion(userSession.Id);
                 if (nextQuestionId > 0)
                 {
                     var question = db.Questions.Include("QuestionVariants").FirstOrDefault(d => d.Id == nextQuestionId);
                     model.NextQuestion = question;
                 }
-                else
-                    userSession.IsCompleted = true;
-                db.SaveChanges();
             }
 
             return View(model);

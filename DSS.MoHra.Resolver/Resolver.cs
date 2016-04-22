@@ -78,7 +78,7 @@ namespace DSS.MoHra.Resolver
                 resultPremise = resultPremise.Replace(fact.Code, value);
             }
 
-            throw new NotImplementedException();
+            return ResolverHelper.Evaluate(resultPremise);
         }
     }
 }

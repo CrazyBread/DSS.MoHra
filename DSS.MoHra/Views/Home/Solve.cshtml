@@ -1,0 +1,11 @@
+﻿@model DSS.MoHra.Models.HomeViewModel
+@{
+    ViewBag.Title = "Вывод решателя";
+}
+
+<pre>
+@foreach(var message in Model.Result.Log)
+{
+    @message@("\n")
+}
+</pre>

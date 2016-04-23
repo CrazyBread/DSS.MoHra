@@ -32,7 +32,7 @@ namespace DSS.MoHra.Resolver
             } while (shouldRepeat);
 
             result.Facts.AddRange(KnownFacts.Where(i => !i.QuestionValue.HasValue));
-
+            
             return result;
         }
     }

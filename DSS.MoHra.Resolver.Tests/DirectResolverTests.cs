@@ -71,7 +71,7 @@ namespace DSS.MoHra.Resolver.Tests
 
             Assert.AreNotEqual(null, result);
             Assert.AreNotEqual(0, result.Log.Count);
-            Assert.AreEqual(2, result.Facts.Count); // becaule without B
+            Assert.AreEqual(2, result.Facts.Count); // because without B
         }
     }
 }

@@ -22,6 +22,7 @@
         <AssociationConnector Association="DataContextModel.FK_User_UserRole" />
         <AssociationConnector Association="DataContextModel.FK_UserInformation_User" />
         <AssociationConnector Association="DataContextModel.FK_UserRole_UserRole" />
+        <AssociationConnector Association="DataContextModel.FK_ResolverCondition_Result" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

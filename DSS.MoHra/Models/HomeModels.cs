@@ -7,6 +7,7 @@ namespace DSS.MoHra.Models
 {
     public class HomeViewModel
     {
-        public Question NextQuestion; 
+        public Question NextQuestion;
+        public Resolver.ResolverResult Result;
     }
 }

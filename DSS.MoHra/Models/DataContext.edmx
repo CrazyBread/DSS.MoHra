@@ -40,7 +40,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Premise" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Conclusion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ConclusionResultId" Type="int" Nullable="false" />
           <Property Name="Desctipion" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
         </EntityType>
@@ -162,6 +162,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ResolverCondition_Result">
+          <End Role="Result" Type="Self.Result" Multiplicity="1" />
+          <End Role="ResolverCondition" Type="Self.ResolverCondition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Result">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResolverCondition">
+              <PropertyRef Name="ConclusionResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Result_ResultGroup">
           <End Role="ResultGroup" Type="Self.ResultGroup" Multiplicity="1" />
           <End Role="Result" Type="Self.Result" Multiplicity="*" />
@@ -249,6 +261,10 @@
             <End Role="Question" EntitySet="Question" />
             <End Role="QuestionVariant" EntitySet="QuestionVariant" />
           </AssociationSet>
+          <AssociationSet Name="FK_ResolverCondition_Result" Association="Self.FK_ResolverCondition_Result">
+            <End Role="Result" EntitySet="Result" />
+            <End Role="ResolverCondition" EntitySet="ResolverCondition" />
+          </AssociationSet>
           <AssociationSet Name="FK_Result_ResultGroup" Association="Self.FK_Result_ResultGroup">
             <End Role="ResultGroup" EntitySet="ResultGroup" />
             <End Role="Result" EntitySet="Result" />
@@ -306,9 +322,10 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Premise" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Conclusion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ConclusionResultId" Type="Int32" Nullable="false" />
           <Property Name="Desctipion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
+          <NavigationProperty Name="ConclusionResult" Relationship="DataContextModel.FK_ResolverCondition_Result" FromRole="ResolverCondition" ToRole="Result" />
         </EntityType>
         <EntityType Name="Result">
           <Key>
@@ -322,6 +339,7 @@
           <Property Name="IsFinish" Type="Boolean" Nullable="false" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
           <NavigationProperty Name="ResultGroup" Relationship="Self.FK_Result_ResultGroup" FromRole="Result" ToRole="ResultGroup" />
+          <NavigationProperty Name="ResolverConditions" Relationship="DataContextModel.FK_ResolverCondition_Result" FromRole="Result" ToRole="ResolverCondition" />
         </EntityType>
         <EntityType Name="ResultGroup">
           <Key>
@@ -455,6 +473,10 @@
             <End Role="UserRole" EntitySet="UserRoles" />
             <End Role="UserRole1" EntitySet="UserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_ResolverCondition_Result" Association="DataContextModel.FK_ResolverCondition_Result">
+            <End Role="Result" EntitySet="Results" />
+            <End Role="ResolverCondition" EntitySet="ResolverConditions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInformation">
           <Key>
@@ -521,6 +543,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ResolverCondition_Result">
+          <End Type="DataContextModel.Result" Role="Result" Multiplicity="1" />
+          <End Type="DataContextModel.ResolverCondition" Role="ResolverCondition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Result">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResolverCondition">
+              <PropertyRef Name="ConclusionResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -553,9 +587,9 @@
           <EntitySetMapping Name="ResolverConditions">
             <EntityTypeMapping TypeName="DataContextModel.ResolverCondition">
               <MappingFragment StoreEntitySet="ResolverCondition">
+                <ScalarProperty Name="ConclusionResultId" ColumnName="ConclusionResultId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Premise" ColumnName="Premise" />
-                <ScalarProperty Name="Conclusion" ColumnName="Conclusion" />
                 <ScalarProperty Name="Desctipion" ColumnName="Desctipion" />
                 <ScalarProperty Name="Created" ColumnName="Created" />
               </MappingFragment>

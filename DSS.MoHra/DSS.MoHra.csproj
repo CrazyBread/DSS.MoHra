@@ -334,6 +334,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\List.cshtml" />
+    <Content Include="Views\Home\Solve.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -343,6 +344,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DSS.MoHra.Resolver\DSS.MoHra.Resolver.csproj">
+      <Project>{837eecf4-667f-4653-9e10-5f349e706583}</Project>
+      <Name>DSS.MoHra.Resolver</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

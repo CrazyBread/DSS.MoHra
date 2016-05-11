@@ -77,9 +77,10 @@ namespace DSS.MoHra.Resolver
                 return false;
 
             var resultPremise = rule.Premise;
+            resultPremise = resultPremise.Replace("+", "||").Replace("*", "&&");
             foreach(var fact in factItems.OrderByDescending(i => i.Code.Length))
             {
-                var value = !fact.QuestionValue.HasValue ? "1" : Convert.ToInt16(fact.QuestionValue).ToString();
+                var value = !fact.QuestionValue.HasValue ? "true" : fact.QuestionValue.ToString().ToLower();
                 resultPremise = resultPremise.Replace(fact.Code, value);
             }
 

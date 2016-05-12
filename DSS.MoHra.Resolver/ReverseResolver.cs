@@ -8,5 +8,52 @@ namespace DSS.MoHra.Resolver
 {
     public class ReverseResolver : Resolver
     {
+
+        public override ResolverResult Resolve()
+        {
+            base.Resolve();
+
+            var result = new ResolverResult();
+
+            bool shouldRepeat = false;
+            do
+            {
+                shouldRepeat = false;
+
+                var currentAnswer = Answers.Last();
+                result.Add("Запущен новый цикл поиска ответа. Ищем факт " + currentAnswer.fact.Code);
+                var rule = Rules.FirstOrDefault(m => m.Conclusion == currentAnswer.fact);
+                result.Add("Выбрано правило " + rule.Premise + " -> " + rule.Conclusion.Code);
+                MarkRuleAsUsed(rule);
+
+                var factNames = rule.Premise.Split(new char[] { '+', '*', '(', ')', '!' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                var knowFactItems = KnownFacts.Select(m => m.Code).Where(i => factNames.Contains(i));
+
+                if (factNames.Count() != knowFactItems.Count())
+                {
+                    result.Add("В правиле имеются неизвестные факты");
+                    var list = factNames.Except(knowFactItems);
+                    if (list.Count() > 0)
+                    {
+                        var needFact = Facts.First(m => m.Code == list.First());
+                        AddAnswer(new ResolverAnswer(needFact));
+                        result.Add("Необходимо определить факт " + needFact.Code);
+                    }
+                } else
+                {
+                    result.Add("В правиле все факты известны");
+                    AddKnownFact(rule.Conclusion);
+                    DeleteAnswer(currentAnswer);
+                    result.Add("Делаем вывод, что факт " + rule.Conclusion.Code + " известен");
+                }
+                if (Answers.Count() > 0) {
+                    shouldRepeat = true;
+                } 
+            } while (shouldRepeat);
+
+            result.Facts.AddRange(KnownFacts.Where(i => !i.QuestionValue.HasValue));
+
+            return result;
+        }
     }
 }

@@ -15,11 +15,13 @@ namespace DSS.MoHra.Resolver
         private List<ResolverFact> _knownFacts;
         private List<ResolverRule> _rules;
         private List<ResolverRule> _usedRules;
+        private List<ResolverAnswer> _answers;
 
         protected ReadOnlyCollection<ResolverFact> KnownFacts { get { return _knownFacts.AsReadOnly(); } }
         protected ReadOnlyCollection<ResolverRule> UsedRules { get { return _usedRules.AsReadOnly(); } }
         public ReadOnlyCollection<ResolverFact> Facts { get { return _facts.AsReadOnly(); } }
         public ReadOnlyCollection<ResolverRule> Rules { get { return _rules.AsReadOnly(); } }
+        public ReadOnlyCollection<ResolverAnswer> Answers { get { return _answers.AsReadOnly(); } }
 
         public Resolver()
         {
@@ -27,6 +29,7 @@ namespace DSS.MoHra.Resolver
             _knownFacts = new List<ResolverFact>();
             _rules = new List<ResolverRule>();
             _usedRules = new List<ResolverRule>();
+            _answers = new List<ResolverAnswer>();
         }
 
         public void AddFact(ResolverFact fact)
@@ -39,6 +42,18 @@ namespace DSS.MoHra.Resolver
         {
             if (!_rules.Contains(rule))
                 _rules.Add(rule);
+        }
+
+        public void AddAnswer(ResolverAnswer answer)
+        {
+            if (!_answers.Contains(answer))
+                _answers.Add(answer);
+        }
+
+        public void DeleteAnswer(ResolverAnswer answer)
+        {
+            if (_answers.Contains(answer))
+                _answers.Remove(answer);
         }
 
         public virtual ResolverResult Resolve()

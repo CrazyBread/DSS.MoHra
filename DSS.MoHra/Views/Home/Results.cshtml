@@ -1,0 +1,32 @@
+﻿@model DSS.MoHra.Models.HomeViewModel
+@{
+    ViewBag.Title = "Факты";
+    var groupId = -1;
+}
+
+<div class="box">
+    <div class="box-body">
+        <table class="table table-striped">
+            <tr>
+                <th>&nbsp;</th>
+                <th>Название</th>
+                <th>Код</th>
+            </tr>
+            @foreach (var result in Model.Results.OrderBy(i => i.ResultGroup.Name))
+            {
+                if (groupId != result.GroupId)
+                {
+                    groupId = result.GroupId;
+                    <tr>
+                        <th colspan="3" >@result.ResultGroup.Name</th>
+                    </tr>
+                }
+                <tr>
+                    <td style="white-space: nowrap;width:1px"><i class="fa fa-angle-double-right"></i></td>
+                    <td>@Html.DisplayFor(i => result.Name)</td>
+                    <td><small>@Html.DisplayFor(i => result.Code)</small></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

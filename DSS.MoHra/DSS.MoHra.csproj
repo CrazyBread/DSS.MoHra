@@ -335,6 +335,8 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\Home\Solve.cshtml" />
+    <Content Include="Views\Home\Conditions.cshtml" />
+    <Content Include="Views\Home\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

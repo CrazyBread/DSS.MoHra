@@ -3,6 +3,41 @@
     ViewBag.Title = "Вывод решателя";
 }
 
+<div class="row">
+    @if (Model.Answers != null && Model.Answers.Any())
+    {
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Известные ответы</h3>
+                </div>
+                <div class="list-group">
+                    @foreach (var answer in Model.Answers)
+                    {
+                        <div class="list-group-item">
+                            @answer.Name
+                            <span class="pull-right"><span class="label label-primary">@answer.Code</span></span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model.Result != null && !string.IsNullOrEmpty(Model.Result.Summary))
+    {
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Результат</h3>
+                </div>
+                <div class="panel-body">
+                    <pre style="font-size: 24px">@Model.Result.Summary</pre>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
 <pre>
 @foreach(var message in Model.Result.Log)
 {

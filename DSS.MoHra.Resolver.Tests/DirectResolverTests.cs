@@ -54,7 +54,7 @@ namespace DSS.MoHra.Resolver.Tests
             var resolver = new DirectResolver();
 
             var factA = new ResolverFact("A");
-            var factB = new ResolverFact("B", false);
+            var factB = new ResolverFact("B", questionValue: false);
             var factC = new ResolverFact("C");
 
             var rule1 = new ResolverRule("A*!B", factC);

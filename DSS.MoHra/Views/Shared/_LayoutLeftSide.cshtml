@@ -7,8 +7,18 @@
         <ul class="sidebar-menu">
             <li class="header">Навигация по сайту</li>
             <li>
-                <a href="@Url.Action("List", "Client", new { area = "" })">
+                <a href="@Url.Action("Index", "Home", new {area = ""})">
                     <i class="fa fa-file-text-o"></i> <span>Тестирование</span>
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Conditions", "Home", new {area = ""})">
+                    <i class="fa fa-hand-peace-o"></i> <span>Правила</span>
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Results", "Home", new { area = "" })">
+                    <i class="fa fa-gavel"></i> <span>Факты</span>
                 </a>
             </li>
             <li>

@@ -14,6 +14,7 @@ namespace DSS.MoHra.Resolver
             base.Resolve();
 
             var result = new ResolverResult();
+            var summary = "";
 
             bool shouldRepeat = false;
             do
@@ -21,9 +22,9 @@ namespace DSS.MoHra.Resolver
                 shouldRepeat = false;
 
                 var currentAnswer = Answers.Last();
-                result.Add("Запущен новый цикл поиска ответа. Ищем факт " + currentAnswer.fact.Code);
+                result.Add("Запущен новый цикл поиска ответа. Ищем факт " + currentAnswer.fact.Code + ": " + currentAnswer.fact.Name);
                 var rule = Rules.FirstOrDefault(m => m.Conclusion == currentAnswer.fact);
-                result.Add("Выбрано правило " + rule.Premise + " -> " + rule.Conclusion.Code);
+                result.Add("Выбрано правило " + rule.Premise + " -> " + rule.Conclusion.Code + ": " + rule.Description);
                 MarkRuleAsUsed(rule);
 
                 var factNames = rule.Premise.Split(new char[] { '+', '*', '(', ')', '!' }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -37,14 +38,15 @@ namespace DSS.MoHra.Resolver
                     {
                         var needFact = Facts.First(m => m.Code == list.First());
                         AddAnswer(new ResolverAnswer(needFact));
-                        result.Add("Необходимо определить факт " + needFact.Code);
+                        result.Add("Необходимо определить факт " + needFact.Code + ": " + needFact.Name);
                     }
                 } else
                 {
                     result.Add("В правиле все факты известны");
                     AddKnownFact(rule.Conclusion);
                     DeleteAnswer(currentAnswer);
-                    result.Add("Делаем вывод, что факт " + rule.Conclusion.Code + " известен");
+                    result.Add("Делаем вывод, что факт " + rule.Conclusion.Code + " известен: " + rule.Conclusion.Name);
+                    summary += rule.Conclusion.Name + "\n";
                 }
                 if (Answers.Count() > 0) {
                     shouldRepeat = true;
@@ -52,7 +54,7 @@ namespace DSS.MoHra.Resolver
             } while (shouldRepeat);
 
             result.Facts.AddRange(KnownFacts.Where(i => !i.QuestionValue.HasValue));
-
+            result.Summary = summary;
             return result;
         }
     }

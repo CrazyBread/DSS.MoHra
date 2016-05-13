@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DSS.MoHra.Resolver;
 
 namespace DSS.MoHra.Controllers
 {
@@ -67,15 +68,15 @@ namespace DSS.MoHra.Controllers
             return View(model);
         }
 
-        public ActionResult Solve(int id)
+        public ActionResult Solve(int id, string reverse)
         {
             var model = new HomeViewModel();
 
-            var resolver = new Resolver.DirectResolver();
-
+            IResolver resolver = (!string.IsNullOrEmpty(reverse)) ? (IResolver) new ReverseResolver() : new DirectResolver();
+            
             var userSession = db.UserSessions.FirstOrDefault(d => d.UserId == Helpers.Identity.User.Id && d.Id == id);
-            var factsFromResults = db.Results.ToList().Select(i => new Resolver.ResolverFact(i.Code, null));
-            var factsFromAnswers = userSession.QuestionVariants.ToList().Select(i => new Resolver.ResolverFact(i.FactCode, true));
+            var factsFromResults = db.Results.ToList().Select(i => new Resolver.ResolverFact(i.Code, i.Name));
+            var factsFromAnswers = userSession.QuestionVariants.ToList().Select(i => new Resolver.ResolverFact(i.FactCode, i.Text, true));
             
             var answeredQuestionIds = userSession.QuestionVariants.Select(i => i.QuestionId).Distinct();
             var factsNotFromAnswers = db.QuestionVariants
@@ -83,27 +84,25 @@ namespace DSS.MoHra.Controllers
                                         .ToList()
                                         .Except(userSession.QuestionVariants.ToList())
                                         //.ToList()
-                                        .Select(i => new Resolver.ResolverFact(i.FactCode, false));
+                                        .Select(i => new Resolver.ResolverFact(i.FactCode, i.Text, false));
 
             var allFacts = factsFromResults.Union(factsFromAnswers).Union(factsNotFromAnswers).ToList();
 
-            //db.ResolverConditions.Select(i => new Resolver.ResolverRule(i.Premise, ));
             foreach (var fact in allFacts)
                 resolver.AddFact(fact);
             foreach (var fact in allFacts.Where(i => i.QuestionValue.HasValue))
                 resolver.AddKnownFact(fact);
 
-            //var factName1 = factsFromAnswers.First().Code;
-            //var factName2 = factsFromAnswers.Last().Code;
-            //var premise = factName1 + "+" + factName2;
-            //resolver.AddRule(new MoHra.Resolver.ResolverRule(premise, allFacts.Where(i => !i.QuestionValue.HasValue).First()));
-
-            var rules = db.ResolverConditions.ToList().Select(i => new Resolver.ResolverRule(i.Premise, allFacts.FirstOrDefault(d => d.Code == i.ConclusionResult.Code)));
+            if(resolver is ReverseResolver)
+                (resolver as ReverseResolver).AddAnswer(new ResolverAnswer((resolver as ReverseResolver).Facts.First(i => i.Code == reverse)));
+            
+            var rules = db.ResolverConditions.ToList().Select(i => new Resolver.ResolverRule(i.Premise, allFacts.FirstOrDefault(d => d.Code == i.ConclusionResult.Code), i.Desctipion));
             foreach (var rule in rules)
                 resolver.AddRule(rule);
 
             var result = resolver.Resolve();
             model.Result = result;
+            model.Answers = factsFromAnswers.ToList();
 
             return View(model);
         }
@@ -111,6 +110,20 @@ namespace DSS.MoHra.Controllers
         public ActionResult About()
         {
             return View();
+        }
+
+        public ActionResult Conditions()
+        {
+            var model = new HomeViewModel();
+            model.Conditions = db.ResolverConditions.Include("ConclusionResult").ToList();
+            return View(model);
+        }
+
+        public ActionResult Results()
+        {
+            var model = new HomeViewModel();
+            model.Results = db.Results.Include("ResultGroup").ToList();
+            return View(model);
         }
     }
 }

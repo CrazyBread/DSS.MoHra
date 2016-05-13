@@ -9,5 +9,8 @@ namespace DSS.MoHra.Models
     {
         public Question NextQuestion;
         public Resolver.ResolverResult Result;
+        public List<Resolver.ResolverFact> Answers;
+        public List<ResolverCondition> Conditions;
+        public List<Result> Results;
     }
 }

@@ -1,0 +1,24 @@
+﻿@model DSS.MoHra.Models.HomeViewModel
+@{
+    ViewBag.Title = "Правила";
+}
+
+<div class="box">
+    <div class="box-body">
+        <table class="table table-striped">
+            <tr>
+                <th>Причина</th>
+                <th>Следствие</th>
+                <th>Описание</th>
+            </tr>
+            @foreach (var condition in Model.Conditions)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(i => condition.Premise)</td>
+                    <td>@Html.DisplayFor(i => condition.ConclusionResult.Code)</td>
+                    <td><small>@Html.DisplayFor(i => condition.Desctipion)</small></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

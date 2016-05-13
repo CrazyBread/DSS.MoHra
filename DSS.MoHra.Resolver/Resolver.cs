@@ -86,7 +86,8 @@ namespace DSS.MoHra.Resolver
             var factItems = _facts.Where(i => factNames.Contains(i.Code));
 
             if (factNames.Count() != factItems.Count())
-                throw new ArgumentException("Не все факты, используемые в правиле, найдены.");
+                return false;
+                //throw new ArgumenException("Не все факты, используемые в правиле, найдены.");
 
             if (factItems.Except(_knownFacts).Any())
                 return false;

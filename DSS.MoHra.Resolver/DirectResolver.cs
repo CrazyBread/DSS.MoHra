@@ -13,6 +13,7 @@ namespace DSS.MoHra.Resolver
             base.Resolve();
 
             var result = new ResolverResult();
+            var summary = "";
 
             bool shouldRepeat = false;
             do
@@ -26,13 +27,14 @@ namespace DSS.MoHra.Resolver
                         MarkRuleAsUsed(rule);
                         shouldRepeat = true;
                         AddKnownFact(rule.Conclusion);
-                        result.Add("Добавлен новый факт " + rule.Conclusion.Code + ".");
+                        result.Add($"Добавлен новый факт {rule.Conclusion.Code}: {rule.Conclusion.Name}.");
+                        summary += rule.Conclusion.Name + "\n";
                     }
                 }
             } while (shouldRepeat);
 
             result.Facts.AddRange(KnownFacts.Where(i => !i.QuestionValue.HasValue));
-            
+            result.Summary = summary;
             return result;
         }
     }

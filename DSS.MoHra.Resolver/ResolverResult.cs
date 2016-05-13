@@ -13,6 +13,7 @@ namespace DSS.MoHra.Resolver
 
         public List<ResolverFact> Facts { set; get; }
         public ReadOnlyCollection<string> Log { get { return _log.AsReadOnly(); } }
+        public string Summary { set; get; }
 
         public ResolverResult()
         {

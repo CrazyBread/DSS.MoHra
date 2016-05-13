@@ -41,7 +41,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Premise" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ConclusionResultId" Type="int" Nullable="false" />
-          <Property Name="Desctipion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Desctipion" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="Created" Type="datetime2" Precision="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Result">
@@ -323,7 +323,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Premise" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ConclusionResultId" Type="Int32" Nullable="false" />
-          <Property Name="Desctipion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Desctipion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="2" />
           <NavigationProperty Name="ConclusionResult" Relationship="DataContextModel.FK_ResolverCondition_Result" FromRole="ResolverCondition" ToRole="Result" />
         </EntityType>
